@@ -1,0 +1,21 @@
+<div class="nws-quiz-holder">
+    {%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+    {% comment %} Use string splitting to pull the value from content_for_header and apply some string clean up {% endcomment %}
+    {%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |
+       replace:'\/','/' | 
+       replace:'%20',' ' | 
+       replace:'\u0026','&'
+    -%}
+    {%- assign pageQuerystring = pageUrl | split:'?' | last -%}
+    {% assign vid = pageQuerystring | replace: 'v=','' %}
+    <form class="product-form product-form-product-template" method="post" action="/cart/add" id="product-form-{{ vid }}" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="novalidate" >
+      <input type="hidden" name="id" value="{{ vid }}" >
+      {% section 'nws-customer-info' %}
+      {% section 'nws-goal-select' %} 
+      {% section 'nws-measuring-guide' %}
+      {% section 'nws-cuff-buttons' %}
+      {% section 'nws-initials' %}
+      {% section 'nws-img-with-text' %}
+      {% section 'nws-quiz-data' %}
+    </form> 
+</div>    
