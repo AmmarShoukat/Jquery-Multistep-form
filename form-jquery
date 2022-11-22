@@ -1,0 +1,168 @@
+// quiz wizard form
+// Default tab
+$(".tab").css("display", "none");
+$("#tab-1").css("display", "block");
+
+function run(hideTab, showTab) {
+// Switch tab
+// console.log("#tab-"+hideTab);
+    $("#tab-" + hideTab).css({
+        "display": "none"
+    });
+    $("#tab-" + showTab).css({
+        "display": "block"
+    });
+}
+
+// show/hide button on input field data value
+$("#name").keyup(function() {
+    if (!this.value) {
+        $('.nws-email-container .next').hide();
+    } else {
+        $('.nws-email-container .next').show();
+    }
+});
+// show/hide initials button on input field data
+
+$("#initials").keyup(function() {
+    if (!this.value) {
+        $('.nws-init-container .next').hide();
+    } else {
+        $('.nws-init-container .next').show();
+    }
+});
+// show/hide suite section button 
+$("#email").keyup(function() {
+    if (!this.value) {
+        $('.nws-suite-container .next').hide();
+    } else {
+        $('.nws-suite-container .next').show();
+    }
+});
+
+// show/hide button on basis of checkbox selection
+var checkboxes = $('.nws-goal-container .nws-checkbox');
+checkboxes.change(function() {
+    // a=$('.nws-checkbox:checked').length;
+    // // console.log(a);
+    if ($('.nws-goal-container .nws-checkbox:checked').length > 0) {
+        $('.nws-goal-container .next').show();
+    } else {
+        $('.nws-goal-container .next').hide();
+    }
+});
+
+// cuff buttons section checkbox 
+// $(".nws-cuff-container .next").hide();
+var checkboxes = $('.nws-cuff-container .nws-checkbox');
+checkboxes.change(function() {
+    // a=$('.nws-checkbox:checked').length;
+    // console.log(a);
+    if ($('.nws-cuff-container .nws-checkbox:checked').length > 0) {
+        $('.nws-cuff-container .next').show();
+    } else {
+        $('.nws-cuff-container .next').hide();
+    }
+});
+$('.nws-val-send').on('click', function() {
+    $('.nws-name').text($('#name').val());
+    $('.nws-initial').text($('#initials').val());
+    $('.nws-mail').text($('#email').val());
+
+
+    // goal select checkbox values
+    var goal_val = [];
+    $('.nws-goal-container .nws-checkbox:checked').each(function(i) {
+        goal_val[i] = $(this).val();
+    });
+    $('.nws-goal').text(goal_val);
+    var other_txt = $('#other-text').val();
+    if (other_txt != "") {
+        $(".nws-goal").append("<span></span>");
+        $('.nws-goal span').text("Other Resaon:" + $('#other-text').val());
+    }
+    // selected radio button value
+    var radio_val = $('.nws-param input:checked').val();
+  
+    // setting measuring guide values
+    var conceptName = $(".nws-measuring-parameter select option").filter(":selected").val();
+    $('.nws-measurement').text(radio_val + ': ' + conceptName);
+  
+    // setting bust size value
+    var bust_val = $("#nws_size_acc1 select option").filter(":selected").val();
+    $('.nws-bust').text(radio_val + ': ' + bust_val);
+  
+    // setting waist site
+    var wait_val = $("#nws_size_acc2 select option").filter(":selected").val();
+    $('.nws-waist').text(radio_val + ': ' + wait_val);
+  
+    // setting hip size
+    var hip_val = $("#nws_size_acc3 select option").filter(":selected").val();
+    $('.nws-hip').text(radio_val + ': ' + hip_val);
+  
+    // cuff button types values
+    var cuff_val = [];
+    $('.nws-cuff-holder .nws-checkbox:checked').each(function(i) {
+        cuff_val[i] = $(this).val();
+    });
+    $('.nws-cuff').text(cuff_val);
+});
+    // email validation
+    
+    
+  </script>
+
+
+<script>
+    $(document).ready(function(e) {
+        $('.nws-val-send').click(function() {
+            var sEmail = $('#email').val();
+            if ($.trim(sEmail).length == 0) {
+                alert('Please enter valid email address');
+                e.preventDefault();
+            }
+            if (validateEmail(sEmail)) {
+                run(6,7);
+            }
+            else {
+                alert('Enter Valid Email Address');
+                e.preventDefault();
+            }
+        });
+    });
+    
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // end email validation
+    
+    $("form.product-form").each( function () {
+          $(this).bind("submit",function(e){
+            e.preventDefault();
+            var formID = $(this).attr("id");
+            $.ajax({
+              type: 'post',
+              url: '/cart/add.js',
+              data: $(this).serialize(),
+              dataType: 'json',
+              success: function(resp) {
+                //Shopify.KT_getCart(); 
+                //KT.drawOpen();
+                window.location.href = "/cart"
+                //console.log(success);
+              },
+              error: function(error) {
+                //console.log(error)
+              }
+            });
+            return false;
+          });
+        });
+    </script>
+    
