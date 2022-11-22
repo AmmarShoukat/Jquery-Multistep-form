@@ -1,0 +1,58 @@
+<!--nws-goal-select -->
+        <div class="nws-goal-container tab" id="tab-2">
+            <div class="head-content">
+              <h2 class="nws-head-32">{{ section.settings.mail_title }}</h2>
+              <div class="nws-desc-16">{{ section.settings.mail_desc }}</div>
+            </div>
+          <div class="nws-checkbox">
+             {% for block in section.blocks %}
+                <div class="nws-boxholder">
+                   <input type="checkbox" class="nws-checkbox" name="properties[Product Goals]" value="{{ block.settings.goal_select }}">
+                   <label for="link_{{ forloop.index }}"> {{ block.settings.goal_select }}</label>
+                </div>   
+              {% endfor %}
+                <div class="nws-other-reason">
+                  <label for="other-text"> {{ section.settings.other_text }}</label>
+                  <input type="text" name="properties[Other Reasons]" id="other-text">
+                </div>
+          </div>
+           <div class="nws-btn-wrapper">
+             <button type="button" onclick="run(2,1);" class="prev">Previous</button>
+             <button type="button" onclick="run(2,3);" class="next">Continue</button>
+           </div>
+      </div>
+{% schema %}
+{
+  "name": "Nws Goal Select",
+  "settings": [
+     {
+          "type": "text",
+          "id": "mail_title",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "mail_desc",
+          "label": "Description"
+        },
+        {
+        "type":"text",
+        "id":"other_text",
+        "label":"Specify Other Details"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Select Goal",
+      "settings": [
+        {
+          "type": "text",
+          "id": "goal_select",
+          "label":"Add Goals"
+        }
+      ]
+    }
+  ]
+    }
+{% endschema %}
