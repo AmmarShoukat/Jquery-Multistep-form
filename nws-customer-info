@@ -1,0 +1,32 @@
+<!--nws-customer-info-->
+        <div class="nws-email-container tab" id="tab-1">
+            <div class="head-content">
+              <h2 class="nws-head-32">{{ section.settings.mail_title }}</h2>
+              <div class="nws-desc-16">{{ section.settings.mail_desc }}</div>
+              <div class="name-field">
+                <label class="nws-input-label" for="name">ENTER YOUR NAME</label>
+                <input type="text" class="nws-input-field" name="properties[Name]" id="name" autocomplete="off"/>
+              </div>
+            </div>
+          <div class="nws-btn-wrapper">
+            <button type="button" onclick="run(1,2);" class="next">Continue</button>
+          </div>
+        </div>
+
+{% schema %}
+{
+  "name": "Nws Customer Info",
+  "settings": [
+     {
+          "type": "text",
+          "id": "mail_title",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "mail_desc",
+          "label": "Description"
+        }
+  ]
+    }
+{% endschema %}
